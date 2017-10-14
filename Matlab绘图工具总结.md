@@ -177,7 +177,8 @@ linspace（to generate linearly spaced vectors）
 y = linspace(a,b,n)
 % generate n points linearly spaced between and including a and b
 ```
-### save命令
+### save/load
+#### save
 有命令模式和函数模式（即加括号和单引号）两种
 - 命令模式
 ```
@@ -187,6 +188,36 @@ save tianzhen.mat x y
 ```
 save('tianzhen.mat','x','y')
 ```
+#### load
+用load函数，可以将数据读入到matlab的工作空间中。
+
+```
+load('tianzhen.mat')
+```
+
+注意，load 是将filename.mat中的所有变量读入matlab工作空间中,也可以选择读入哪个变量。注意原mat保存的哪一个（些）变量，**变量名字是没有变的**。
+
+还有一个问题是我的mat文件中保存这一个变量,可是默认的读入matlab中后,还是保存时用的名字,但是,我想用一个新名字代替,怎么办?具体用程序描述如下:
+
+```
+ save tianzhen.mat p
+```
+
+那么load tianzhen.mat之后，就可以在工作空间中看到p变量了。可是，如果用load读入之后，不想用变量名p了，怎么办？
+
+具体解决办法：
+
+```
+s=load('tianzhen.mat');
+
+sc=struct2cell(s);
+
+t=cell2mat(sc);
+```
+
+
+那么,读入的struct类型变量就被转换成cell类型数据,然后再转换为double类型的数据.
+
 ---
 
 参考文档
