@@ -3,7 +3,7 @@ clc
 close all
 format long;
 L = 0; %？
-Monte = 1;
+Monte = 50;
 axisX = 30; %50%x轴最大值
 axisY = 30;%50
 Total_time = 20;%40
@@ -14,7 +14,7 @@ xpart = 0:Re_x:axisX;
 numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %?
-SNR = [9]; %
+SNR = [6,9]; %
 NpN =100;%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
@@ -38,6 +38,8 @@ y_dis = ceil(x(3,:)/Re_y)*Re_y;
 
 figure(1)
 plot(x(1,:),x(3,:),'bp-');
+axis equal
+axis([0 30 0 30])
 hold on; grid on;
 
 E_target = zeros(7,Total_time,Monte,length(SNR),length(NpN));
@@ -72,12 +74,6 @@ for Np_i = 1:length(NpN)
                 Frame_data(y_dis(t),x_dis(t),t) = Frame_data(y_dis(t),x_dis(t),t)+ B;
                 xy_data(:,:,t)=abs(Frame_data(:,:,t));
                 
-                for t_mesh = 2:2:20
-                figure(t_mesh)
-                mesh(xpart,ypart,xy_data(:,:,t_mesh))
-                end
-                
-                
                 %     figure(1)
                 %     imagesc(xpart,ypart,xy_data(:,:,t));
                 %     colorbar
@@ -103,22 +99,22 @@ for Np_i = 1:length(NpN)
         end
 Target_p_error(:,:,snr_i,Np_i) = (squeeze(E_target(1,:,:,snr_i,Np_i))-repmat(x(1,:),Monte,1)').^2 + (squeeze(E_target(4,:,:,snr_i,Np_i))-repmat(x(3,:),Monte,1)').^2; %T*Np*length(SNR)
 error_P(:,snr_i,Np_i) = squeeze(sqrt(mean(Target_p_error(:,:,snr_i,Np_i),2))); %%T*length(SNR)
-    end
-    
-end
-xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i);
-xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)
+  end
 
-% figure(2)
-% plot(xy_P(1,:),xy_P(4,:),'bp-')
-% axis([0,axisX,0,axisY])
-% hold on;grid on;
-% plot(x(1,:),x(3,:),'ko-')
-% title('跟踪结果')
-% xlabel('x方向距离')
-% ylabel('y方向距离')
-% legend('估计轨迹','真实轨迹')
-% 
+xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i);
+end;
+%xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)
+
+figure(2)
+plot(xy_P(1,:),xy_P(4,:),'bp-')
+axis([0,axisX,0,axisY])
+hold on;grid on;
+plot(x(1,:),x(3,:),'ko-')
+title('跟踪结果')
+xlabel('x方向距离')
+ylabel('y方向距离')
+legend('估计轨迹','真实轨迹')
+
 % figure(3)
 % plot(error_P(:,1,Np_i),'^-');
 % title('各帧均方误差')
