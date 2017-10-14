@@ -177,7 +177,16 @@ linspace（to generate linearly spaced vectors）
 y = linspace(a,b,n)
 % generate n points linearly spaced between and including a and b
 ```
-
+### save命令
+有命令模式和函数模式（即加括号和单引号）两种
+- 命令模式
+```
+save tianzhen.mat x y
+```
+- 函数模式
+```
+save('tianzhen.mat','x','y')
+```
 ---
 
 参考文档
