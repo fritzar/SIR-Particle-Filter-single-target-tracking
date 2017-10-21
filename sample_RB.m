@@ -24,4 +24,3 @@ function [ Particle_T ] = sample_RB( Particle_O,T_step,Q_l,Q_n,Q_ln,A_1_t,Q_1_l,
             Particle_T(6)=V_p_t1_t(2,2);
             
 end
-

@@ -17,7 +17,7 @@ Q_l=q1*[T_step,0;0,T_step];
 Q_n=q1*[T_step^3/3,0;0,T_step^3/3];
 Q_ln=q1*[T_step^2/2,0;0,T_step^2/2];
 A_1_t=eye(2)-Q_ln/(Q_n)*T_step;
-Q_1_l=Q_l-(Q_ln.')*(inv(Q_n))*Q_ln;
+Q_1_l=Q_l-(Q_ln.')*(inv(Q_n))*Q_ln; % 对于复数矩阵，.' 为普通转置，'为共轭转置
 
 % Target_number = 1;
 E_target_state_MC=zeros(7,Total_time);
@@ -123,6 +123,7 @@ for t = 1:Total_time
 %                sigma2=Sigma_noise.*ones(1,Np); 
 %                mu_h1(j) = Pre_T_particle(7,t,j).*exp(-((Pre_T_particle(1,t,j)-Z_x_index.*Re_x).^2/Re_x+(Pre_T_particle(4,t,j)-Z_y_index.*Re_y).^2/Re_y)*L)+sigma2(j);
 %                mu_h0=sigma2;
+% Partition_likehood(j)=((1./mu_h1(j)).*exp(-(1./mu_h1(j)).*Detection_frame(Z_y_index,Z_x_index)))./((1./mu_h0(j)).*exp(-(1./mu_h0(j)).*Detection_frame(Z_y_index,Z_x_index)));
 %     
             else
                 Partition_likehood(j)=0;
