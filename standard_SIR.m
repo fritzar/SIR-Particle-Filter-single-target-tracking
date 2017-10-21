@@ -82,7 +82,7 @@ for t = 1:Total_time
             %% === Rao-blackwellisation
             
             %%
-              %%%%采样前
+%               %%%%采样前
 %                                 figure(7)
 %                                 colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
 %         %                     plot(squeeze(Pre_T_particle(1,t-1,i,:)),squeeze(Pre_T_particle(4,t-1,i,:)),colorParticle{1,i})

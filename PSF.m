@@ -14,7 +14,7 @@ xpart = 0:Re_x:axisX;
 numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %?
-SNR = [6,9]; %
+SNR = [6]; %
 NpN =100;%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
@@ -36,11 +36,22 @@ velocity_init = 1; %
 x_dis = ceil(x(1,:)/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
 y_dis = ceil(x(3,:)/Re_y)*Re_y;
 
+
+%% adding fake target 
+[fake_initx,fake_x,fake_x_c] = GenerateFakeTarget(Target_number,velocity_init,axisX,axisY,Total_time,F,Q);
+
 figure(1)
-plot(x(1,:),x(3,:),'bp-');
-axis equal
-axis([0 30 0 30])
+plot(x(1,:),x(3,:),'bp-','Linewidth',2);
 hold on; grid on;
+plot(fake_x(1,[5:15]),fake_x(3,5:15),'m-o','Linewidth',2);
+axis equal
+axis ([0 30 0 30])
+hold off
+
+fake_x_dis = ceil(fake_x(1,[5:15])/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
+fake_y_dis = ceil(fake_x(3,[5:15])/Re_y)*Re_y;
+%%
+
 
 E_target = zeros(7,Total_time,Monte,length(SNR),length(NpN));
 Target_p_error = zeros(Total_time,Monte,length(SNR),length(NpN));
@@ -53,10 +64,41 @@ for Np_i = 1:length(NpN)
           %% 高斯噪声 %%%
             I_noise=Sigma_noise*randn(numY,numX,Total_time);
             Q_noise=Sigma_noise*randn(numY,numX,Total_time);
-            %
+            
+%             I_noise=Sigma_noise*randn(numX,numY,Total_time);
+%             Q_noise=Sigma_noise*randn(numX,numY,Total_time);
             Frame_data=(1/2^0.5).*(I_noise+Q_noise.*(-1)^0.5);
-         %% 瑞利噪声
-            % Noise_data = raylrnd(Sigma_noise,numY,numX*Total_time);
+            
+             
+%             figure(14)  
+%             imagesc(ypart,xpart,abs(Frame_data(:,:,1)));
+%             axis xy;
+%             colormap(gray(64))
+%             colorbar('YTickLabel',{' '});
+%             caxis([0 3.5])
+%             axis equal
+%             axis tight
+%             hold off
+            
+        %% 瑞利噪声
+%             Noise_data = raylrnd(Sigma_noise,numY,numX*Total_time);
+%             for ti=1:Total_time
+%                 for xi=1:numX
+%                     Frame_data (:,xi,ti) = Noise_data (:,xi*ti); 
+%                 end
+%             end
+%             save RayNoise30_6dB Frame_data
+            
+%             figure(14)  
+%             imagesc(ypart,xpart,abs(Frame_data(:,:,1)));
+%             axis xy;
+%             colormap(gray(64))
+%             colorbar('YTickLabel',{' '});
+%             caxis([0 3.5])
+%             axis equal
+%             axis tight
+%             hold off
+                     
         for monte_i = 1:Monte
             display(['Np=',num2str(Np),'; Monte=',num2str(monte_i)])
             %%
@@ -72,7 +114,26 @@ for Np_i = 1:length(NpN)
                 %     end
                 %     Frame_data(y_dis(t),x_dis(t),t) = raylrnd(sqrt(Sigma_noise+A^2),1);
                 Frame_data(y_dis(t),x_dis(t),t) = Frame_data(y_dis(t),x_dis(t),t)+ B;
+                
+                %fake data
+                if t>=5 && t <=15
+                    Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t) = Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t)+ B;
+                end
+                %
+                
                 xy_data(:,:,t)=abs(Frame_data(:,:,t));
+                
+                
+%                 figure(15)
+%                 imagesc(ypart,xpart,xy_data(:,:,1));
+%                 axis xy;
+%                 colormap(gray(64))
+%                 colorbar('YTickLabel',{' '})
+%                 caxis([0 3.5])
+%                 axis equal
+%                 axis tight
+%                 hold off
+                
                 
                 %     figure(1)
                 %     imagesc(xpart,ypart,xy_data(:,:,t));
@@ -99,11 +160,10 @@ for Np_i = 1:length(NpN)
         end
 Target_p_error(:,:,snr_i,Np_i) = (squeeze(E_target(1,:,:,snr_i,Np_i))-repmat(x(1,:),Monte,1)').^2 + (squeeze(E_target(4,:,:,snr_i,Np_i))-repmat(x(3,:),Monte,1)').^2; %T*Np*length(SNR)
 error_P(:,snr_i,Np_i) = squeeze(sqrt(mean(Target_p_error(:,:,snr_i,Np_i),2))); %%T*length(SNR)
-  end
-
+    end
 xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i);
-end;
-%xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)
+xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)
+end
 
 figure(2)
 plot(xy_P(1,:),xy_P(4,:),'bp-')
@@ -114,7 +174,7 @@ title('跟踪结果')
 xlabel('x方向距离')
 ylabel('y方向距离')
 legend('估计轨迹','真实轨迹')
-
+% 
 % figure(3)
 % plot(error_P(:,1,Np_i),'^-');
 % title('各帧均方误差')
