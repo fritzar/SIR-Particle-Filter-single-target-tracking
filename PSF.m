@@ -115,11 +115,11 @@ for Np_i = 1:length(NpN)
                 %     Frame_data(y_dis(t),x_dis(t),t) = raylrnd(sqrt(Sigma_noise+A^2),1);
                 Frame_data(y_dis(t),x_dis(t),t) = Frame_data(y_dis(t),x_dis(t),t)+ B;
                 
-                %fake data
+                %% fake data adding to the plane
                 if t>=5 && t <=15
                     Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t) = Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t)+ B;
                 end
-                %
+                %%
                 
                 xy_data(:,:,t)=abs(Frame_data(:,:,t));
                 

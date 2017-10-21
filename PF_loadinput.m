@@ -39,6 +39,7 @@ load('initx_gen20171009_6-8.mat')
 load('x_c_gen20171009_6-8.mat')
 load('x_gen20171009_6-8.mat')
 
+%%
 x_dis = ceil(x(1,:)/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
 y_dis = ceil(x(3,:)/Re_y)*Re_y;
 

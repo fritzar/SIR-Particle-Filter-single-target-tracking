@@ -6,7 +6,6 @@ function [ Particle_T ] = sample_RB( Particle_O,T_step,Q_l,Q_n,Q_ln,A_1_t,Q_1_l,
         particle_temp=sample_gaussian(mean_temp,covar_temp,1);
         Particle_T(1)=particle_temp(1);
         Particle_T(4)=particle_temp(2);
-        %end
      
      %% -- Kalman filter time update: prediction
             z_t=[Particle_T(1)-Particle_O(1);Particle_T(4)-Particle_O(4)];

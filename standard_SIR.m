@@ -9,7 +9,7 @@ q1=0.002;          % q1,q2 the level of process noise in target motion
 
 %% ---------- initial distribution of target state
 delta_p=0.1;  % the stardard deviation of the inital distribution of position
-new_velocity_Variance=0.01;             % standard deviation 0.1;
+new_velocity_Variance=0.01;             % standard deviation;
 % q2=2;                  % q2 the measurement noise
 
 %% ---------- Rao-blackwellision parameters
@@ -44,8 +44,6 @@ for t = 1:Total_time
     Detection_frame=xy_data(:,:,t);
 %     clean_Frame = zeros(size(Detection_frame));
     if t==1
-        %disp(['t==1']);
-        % number of the birth pre-tracks
         index_x=initx(1)/Re_x;
         index_y=initx(3)/Re_y;
         index_vx=initx(2)/Re_x;
@@ -54,7 +52,7 @@ for t = 1:Total_time
         %--------generate position based the detection measurements
         position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
         position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
-        %% --------generate velocity based on the detections
+        % --------generate velocity based on the detections
         velocity_x_p=repmat(index_vx,Np,1);
         velocity_y_p=repmat(index_vy,Np,1);
 %        velocity_x_p=ones(Np,1);
@@ -130,7 +128,7 @@ for t = 1:Total_time
             end
         end
         Partition_likehood=Partition_likehood./sum(Partition_likehood);
-        %% === sample index funciton
+        %% === sample index funciton: Resampling
                                 %%%%%%粒子云%%%%%%
 %                                 for t=1:5:25
 %                                 %%%%采样前
