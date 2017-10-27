@@ -92,6 +92,8 @@ for t = 1:Total_time
 %                                 title('采样前后粒子云') 
             %%
             Pre_T_particle(1:6,t,j)= sample_RB( Pre_T_particle(1:6,t-1,j),T_step,Q_l,Q_n,Q_ln,A_1_t,Q_1_l,q1 ); %产生新粒子
+            %Pre_T_particle(1:6,t,j)= sample_generic(Pre_T_particle(1:6,t-1,j),T_step,q1 ); 
+            %纯粹的粒子滤波
             %% 
 % %                             plot(squeeze(Pre_T_particle(1,t-1,i,:)),squeeze(Pre_T_particle(4,t-1,i,:)),colorParticle{2,i})
 %                                 plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{3,2})
