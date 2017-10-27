@@ -3,7 +3,7 @@ clc
 close all
 format long;
 L = 0; %？
-Monte = 50;
+Monte = 5;
 axisX = 30; %50%x轴最大值
 axisY = 30;%50
 Total_time = 20;%40
@@ -15,7 +15,7 @@ numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %?
 SNR = [6]; %
-NpN =100;%2.^[1:10]--仿真粒子数变化
+NpN = 100;%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
 q1 = 0.0015; %"空间过程噪声加速度的功率谱密度 ?
@@ -43,19 +43,19 @@ x_dis = ceil(x(1,:)/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
 y_dis = ceil(x(3,:)/Re_y)*Re_y;
 
 
-%% adding fake target 
-[fake_initx,fake_x,fake_x_c] = GenerateFakeTarget(Target_number,velocity_init,axisX,axisY,Total_time,F,Q);
-
-figure(1)
-plot(x(1,:),x(3,:),'bp-','Linewidth',2);
-hold on; grid on;
-plot(fake_x(1,[5:15]),fake_x(3,5:15),'m-o','Linewidth',2);
-axis equal
-axis ([0 30 0 30])
-hold off
-
-fake_x_dis = ceil(fake_x(1,[5:15])/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
-fake_y_dis = ceil(fake_x(3,[5:15])/Re_y)*Re_y;
+% %% adding fake target 
+% [fake_initx,fake_x,fake_x_c] = GenerateFakeTarget(Target_number,velocity_init,axisX,axisY,Total_time,F,Q);
+% 
+% figure(1)
+% plot(x(1,:),x(3,:),'bp-','Linewidth',2);
+% hold on; grid on;
+% plot(fake_x(1,[5:15]),fake_x(3,5:15),'m-o','Linewidth',2);
+% axis equal
+% axis ([0 30 0 30])
+% hold off
+% 
+% fake_x_dis = ceil(fake_x(1,[5:15])/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
+% fake_y_dis = ceil(fake_x(3,[5:15])/Re_y)*Re_y;
 %%
 
 
@@ -121,11 +121,11 @@ for Np_i = 1:length(NpN)
                 %     Frame_data(y_dis(t),x_dis(t),t) = raylrnd(sqrt(Sigma_noise+A^2),1);
                 Frame_data(y_dis(t),x_dis(t),t) = Frame_data(y_dis(t),x_dis(t),t)+ B;
                 
-                %fake data
-                if t>=5 && t <=15
-                    Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t) = Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t)+ B;
-                end
-                %
+%                 %fake data
+%                 if t>=5 && t <=15
+%                     Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t) = Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t)+ B;
+%                 end
+%                 %
                 
                 xy_data(:,:,t)=abs(Frame_data(:,:,t));
                 
@@ -181,14 +181,14 @@ xlabel('x方向距离')
 ylabel('y方向距离')
 legend('估计轨迹','真实轨迹')
 % 
-% figure(3)
-% plot(error_P(:,1,Np_i),'^-');
-% title('各帧均方误差')
-% % axis([0,Total_time,0,1])
-% xlabel('时间/帧')
-% ylabel('均方误差')
-% grid on
-% 
+figure(3)
+plot(error_P(:,1,Np_i),'^-');
+title('各帧均方误差')
+% axis([0,Total_time,0,1])
+xlabel('时间/帧')
+ylabel('均方误差')
+grid on
+ 
 % figure(4)
 % plot(xy_P3(1,:),xy_P3(4,:),'bp-')
 % axis([0,axisX,0,axisY])
