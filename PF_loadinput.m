@@ -13,7 +13,7 @@ ypart = 0:Re_y:axisY; %步长为分辨率
 xpart = 0:Re_x:axisX;
 numY = length(ypart); %取长度
 numX = length(xpart);
-Sigma_noise = 1; %?
+Sigma_noise = 1; %
 SNR = [6]; %
 NpN =100;%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
@@ -69,13 +69,13 @@ for Np_i = 1:length(NpN)
         snr = SNR(snr_i);
         % Frame_data = zeros(numY,numX,Total_time);
           %% 高斯噪声 %%%
-            I_noise=Sigma_noise*randn(numY,numX,Total_time);
-            Q_noise=Sigma_noise*randn(numY,numX,Total_time);
-            
-%             I_noise=Sigma_noise*randn(numX,numY,Total_time);
-%             Q_noise=Sigma_noise*randn(numX,numY,Total_time);
-            Frame_data=(1/2^0.5).*(I_noise+Q_noise.*(-1)^0.5);
-            
+%             I_noise=Sigma_noise*randn(numY,numX,Total_time);
+%             Q_noise=Sigma_noise*randn(numY,numX,Total_time);
+%             
+% %             I_noise=Sigma_noise*randn(numX,numY,Total_time);
+% %             Q_noise=Sigma_noise*randn(numX,numY,Total_time);
+%             Frame_data=(1/2^0.5).*(I_noise+Q_noise.*(-1)^0.5);
+            load('GauNoise30_6dB.mat')
              
 %             figure(14)  
 %             imagesc(ypart,xpart,abs(Frame_data(:,:,1)));

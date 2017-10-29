@@ -100,9 +100,9 @@ for t = 1:Total_time
             Z_x_index=ceil(Pre_T_particle(1,t,j));
             Z_y_index=ceil(Pre_T_particle(4,t,j));
             if Z_x_index<=numX && Z_x_index>0 && Z_y_index<=numY && Z_y_index>0
-                Pre_track_Z(j)=Detection_frame(Z_y_index,Z_x_index);
+                Pre_track_Z(j)=Detection_frame(Z_y_index,Z_x_index); 
                 Pre_T_life_quality(j)=Pre_T_life_quality(j)+Detection_frame(Z_y_index,Z_x_index);
-                Pre_T_particle(7,t,j)=Detection_frame(Z_y_index,Z_x_index);
+                Pre_T_particle(7,t,j)=Detection_frame(Z_y_index,Z_x_index); %该粒子（样本）处的观测值
              %% Gaussian likelihood ratio
                 Partition_likehood(j)=exp(0.5*(2*Detection_frame(Z_y_index,Z_x_index)*A-A^2));
                 %% 高斯点扩散
