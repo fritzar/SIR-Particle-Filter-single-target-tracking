@@ -1,4 +1,4 @@
-# Matlab绘图工具总结
+# Matlab常用工具总结
 
 ## 二维绘图
 ### plot函数
@@ -163,6 +163,34 @@ movie(m,10);%以每秒10幅的速度播放画面
 
 
 ## 其他
+### 随机数生成函数
+` rand(m,n)`生成均匀分布的 m * n 矩阵
+注： ` rand(n,n)=rand(n,n)` 
+
+` randn(m,n)` 满足正态分布的m * n 矩阵
+
+` randperm(m)` 生成由1:m组成的随机序列
+
+` perms(1:n)` 生成由1:n组成的全排列，共n！个。
+
+` random(`name`,A1,A2,A3,m,n)` 满足name分布的m * n随机矩阵，A1...A3等是所需的参数
+name可以取值为
+- norm or Normal
+- unif or Uniform
+- beta or Beta
+- exp or Exponential
+- gam or Gamma
+- geo or Geometric
+- unid or Discrete Uniform
+
+具体参见help random
+
+### 取整函数
+` fix(x)` 截尾取整，舍掉小数部分
+` floor(x)` 不超过x的最大整数
+` ceil(x)` 不小于x的最小整数
+` round(x)` 四舍五入取整
+
 ### 转置
 对矩阵A，`A.'`为普通转置，` A'`为共轭转置。
 

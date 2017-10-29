@@ -49,10 +49,20 @@ for t = 1:Total_time
         index_vx=initx(2)/Re_x;
         index_vy=initx(4)/Re_y;
         % -------generate the new partitions of particles
+<<<<<<< HEAD
         %--------generate position based the detection measurements
         position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
         position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
         % --------generate velocity based on the detections
+=======
+%         %--------generate position based the detection measurements
+%         position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
+%         position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
+        %% --------初始粒子均匀分布
+        position_x_p = random('unif',1,10,Np,1);
+        position_y_p = random('unif',1,10,Np,1);       
+        %% --------generate velocity based on the detections
+>>>>>>> origin/master
         velocity_x_p=repmat(index_vx,Np,1);
         velocity_y_p=repmat(index_vy,Np,1);
 %        velocity_x_p=ones(Np,1);
@@ -69,6 +79,14 @@ for t = 1:Total_time
         end
         Pre_T_particle(7,t,:)=1;
         %particle_likehood_after_bias=ones(1,Np);
+        
+       %% 画初始粒子t=1
+        figure(7)
+        colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
+        grid on
+        plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{1,1})
+        title('采样前后粒子云')
+        axis([0,30,0,30])
     else
         %% --------------- evolution of the pre-tracks ----------------
         %% -----------independent partition particle filter------------
@@ -80,7 +98,7 @@ for t = 1:Total_time
             %% === Rao-blackwellisation
             
             %%
-%               %%%%采样前
+              %%%%采样前
 %                                 figure(7)
 %                                 colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
 %         %                     plot(squeeze(Pre_T_particle(1,t-1,i,:)),squeeze(Pre_T_particle(4,t-1,i,:)),colorParticle{1,i})
@@ -90,7 +108,9 @@ for t = 1:Total_time
 %                                 title('采样前后粒子云') 
             %%
             Pre_T_particle(1:6,t,j)= sample_RB( Pre_T_particle(1:6,t-1,j),T_step,Q_l,Q_n,Q_ln,A_1_t,Q_1_l,q1 ); %产生新粒子
-            %% 
+            %Pre_T_particle(1:6,t,j)= sample_generic(Pre_T_particle(1:6,t-1,j),T_step,q1 ); 
+            %纯粹的粒子滤波
+%             %% 
 % %                             plot(squeeze(Pre_T_particle(1,t-1,i,:)),squeeze(Pre_T_particle(4,t-1,i,:)),colorParticle{2,i})
 %                                 plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{3,2})
 %                                 xlabel('x轴');ylabel('y轴');
@@ -128,7 +148,20 @@ for t = 1:Total_time
             end
         end
         Partition_likehood=Partition_likehood./sum(Partition_likehood);
+<<<<<<< HEAD
         %% === sample index funciton: Resampling
+=======
+        
+        %% 画重采样之前，采样之后的粒子
+         if t>2 || t<=6
+         figure(8)
+         plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{1,t})
+         xlabel('x轴');ylabel('y轴');
+         axis([0,30,0,30])
+         hold on;
+         end
+        %% === sample index funciton
+>>>>>>> origin/master
                                 %%%%%%粒子云%%%%%%
 %                                 for t=1:5:25
 %                                 %%%%采样前
