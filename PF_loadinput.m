@@ -3,7 +3,7 @@ clc
 close all
 format long;
 L = 0; %£ø
-Monte = 5;
+Monte = 50;
 axisX = 30; %50%x÷·◊Ó¥Û÷µ
 axisY = 30;%50
 Total_time = 20;%40
