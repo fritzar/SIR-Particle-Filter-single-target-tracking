@@ -49,12 +49,6 @@ for t = 1:Total_time
         index_vx=initx(2)/Re_x;
         index_vy=initx(4)/Re_y;
         % -------generate the new partitions of particles
-<<<<<<< HEAD
-        %--------generate position based the detection measurements
-        position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
-        position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
-        % --------generate velocity based on the detections
-=======
 %         %--------generate position based the detection measurements
 %         position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
 %         position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
@@ -62,7 +56,6 @@ for t = 1:Total_time
         position_x_p = random('unif',1,10,Np,1);
         position_y_p = random('unif',1,10,Np,1);       
         %% --------generate velocity based on the detections
->>>>>>> origin/master
         velocity_x_p=repmat(index_vx,Np,1);
         velocity_y_p=repmat(index_vy,Np,1);
 %        velocity_x_p=ones(Np,1);
@@ -148,9 +141,7 @@ for t = 1:Total_time
             end
         end
         Partition_likehood=Partition_likehood./sum(Partition_likehood);
-<<<<<<< HEAD
         %% === sample index funciton: Resampling
-=======
         
         %% 画重采样之前，采样之后的粒子
          if t>2 || t<=6
@@ -161,7 +152,6 @@ for t = 1:Total_time
          hold on;
          end
         %% === sample index funciton
->>>>>>> origin/master
                                 %%%%%%粒子云%%%%%%
 %                                 for t=1:5:25
 %                                 %%%%采样前
