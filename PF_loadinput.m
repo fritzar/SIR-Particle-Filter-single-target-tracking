@@ -162,7 +162,8 @@ for Np_i = 1:length(NpN)
                 %     pause
             end
             
-            [E_target_state]=standard_SIR(Np,initx,Re_x,Re_y,numX,numY,Total_time,xy_data,Sigma_noise,A);
+            [E_target_state]=standard_SIR(Np,initx,Re_x,Re_y,numX,numY,Total_time,xy_data,Sigma_noise,A,F,Q);
+            %F、Q为纯粹粒子滤波KP加上的
             E_target(:,:,monte_i,snr_i,Np_i) = E_target_state;
         end
 Target_p_error(:,:,snr_i,Np_i) = (squeeze(E_target(1,:,:,snr_i,Np_i))-repmat(x(1,:),Monte,1)').^2 + (squeeze(E_target(4,:,:,snr_i,Np_i))-repmat(x(3,:),Monte,1)').^2; %T*Np*length(SNR)
