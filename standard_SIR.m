@@ -143,14 +143,14 @@ for t = 1:Total_time
         Partition_likehood=Partition_likehood./sum(Partition_likehood);
         %% === sample index funciton: Resampling
         
-%         %% 画重采样之前，采样之后的粒子
-%          if t>2 || t<=6
-%          figure(8)
-%          plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{1,t})
-%          xlabel('x轴');ylabel('y轴');
-%          axis([0,30,0,30])
-%          hold on;
-%          end
+        %% 画重采样之前，采样之后的粒子
+         if t>2 || t<=6
+         figure(8)
+         plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{1,t})
+         xlabel('x轴');ylabel('y轴');
+         axis([0,30,0,30])
+         hold on;
+         end
         %% === sample index funciton
                                 %%%%%%粒子云%%%%%%
 %                                 for t=1:5:25
