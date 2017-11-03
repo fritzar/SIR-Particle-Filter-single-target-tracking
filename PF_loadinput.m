@@ -181,7 +181,7 @@ plot(x(1,:),x(3,:),'ko-')
 title('跟踪结果')
 xlabel('x方向距离')
 ylabel('y方向距离')
-legend('估计轨迹','真实轨迹')
+legend('估计点迹','真实点迹')
 % 
 figure(3)
 plot(error_P(:,1,Np_i),'^-');
