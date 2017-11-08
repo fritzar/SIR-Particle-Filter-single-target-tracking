@@ -53,8 +53,8 @@ for t = 1:Total_time
 %         position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
 %         position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
         %% --------初始粒子均匀分布
-        position_x_p = random('unif',1,10,Np,1);
-        position_y_p = random('unif',1,10,Np,1);       
+        position_x_p = random('unif',1,30,Np,1);
+        position_y_p = random('unif',1,30,Np,1);       
         %% --------generate velocity based on the detections
         velocity_x_p=repmat(index_vx,Np,1);
         velocity_y_p=repmat(index_vy,Np,1);
@@ -74,12 +74,13 @@ for t = 1:Total_time
         %particle_likehood_after_bias=ones(1,Np);
         
        %% 画初始粒子t=1
-        figure(7)
+        figure(1)
         colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
         grid on
         plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{1,1})
         title('采样前后粒子云')
         axis([0,30,0,30])
+        hold on
     else
         %% --------------- evolution of the pre-tracks ----------------
         %% -----------independent partition particle filter------------
@@ -88,8 +89,7 @@ for t = 1:Total_time
         %particle_likehood_after_bias=zeros(1,Np);
         
         %% ---------纯粹的粒子滤波
-         
-       
+
         %%
         for j=1:Np % 6%
             %% === Rao-blackwellisation
@@ -112,6 +112,7 @@ for t = 1:Total_time
 %                                 plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{3,2})
 %                                 xlabel('x轴');ylabel('y轴');
 % %                            axis([0,numX,0,numY])
+
             %%
             Pre_T_life_index(j)=Pre_T_life_index(j)+1;
             Z_x_index=ceil(Pre_T_particle(1,t,j));
@@ -144,6 +145,15 @@ for t = 1:Total_time
                 Partition_likehood(j)=0;
             end
         end
+        figure (t)
+        colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
+        grid on
+        plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),'k.')
+        axis([0,30,0,30])
+        hold on
+%         keyboard 
+        
+        
         Partition_likehood=Partition_likehood./sum(Partition_likehood);
         %% === sample index funciton: Resampling
         
@@ -171,6 +181,12 @@ for t = 1:Total_time
         Pre_T_particle(:,t,:)=Pre_T_particle(:,t,index_sample);
         Pre_T_life_quality=Pre_T_life_quality(index_sample);
                                 %%%%%%采样后
+        figure (t+20)
+        colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
+        grid on
+        plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),'r.')
+        axis([0,30,0,30])
+        hold on
                                 
 %                                 for t=1:5:25
 %         %                     plot(squeeze(Pre_T_particle(1,t-1,i,:)),squeeze(Pre_T_particle(4,t-1,i,:)),colorParticle{2,i})

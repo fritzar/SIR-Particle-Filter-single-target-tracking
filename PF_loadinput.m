@@ -3,7 +3,7 @@ clc
 close all
 format long;
 L = 0; %？
-Monte = 50;
+Monte = 2;
 axisX = 30; %50%x轴最大值
 axisY = 30;%50
 Total_time = 20;%40
@@ -15,7 +15,7 @@ numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %
 SNR = [6]; %
-NpN = 2048;%2.^[1:10]--仿真粒子数变化
+NpN = 1024;%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
 q1 = 0.0015; %"空间过程噪声加速度的功率谱密度 ?
@@ -173,7 +173,7 @@ xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i);
 xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)
 end
 
-figure(2)
+figure(50)
 plot(xy_P(1,:),xy_P(4,:),'bp-')
 axis([0,axisX,0,axisY])
 hold on;grid on;
@@ -183,7 +183,7 @@ xlabel('x方向距离')
 ylabel('y方向距离')
 legend('估计点迹','真实点迹')
 % 
-figure(3)
+figure(60)
 plot(error_P(:,1,Np_i),'^-');
 title('各帧均方误差')
 % axis([0,Total_time,0,1])
