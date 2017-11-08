@@ -30,7 +30,7 @@ E_target_state_MC=zeros(7,Total_time);
 Pre_T_particle=zeros(7,Total_time,Np);            % Pre_track particles
 % Pre_T_particle_ori=zeros(7,Total_time,Np);      % Pre_track particles
 Pre_T_life_index=zeros(Np,1);                   % life length of the pre-tracks
-Pre_T_life_quality=zeros(Np,1);                 % quality of life length of the pre-tracks
+% Pre_T_life_quality=zeros(Np,1);                 % quality of life length of the pre-tracks
 % Pre_weight0=zeros(Np,Total_time);               % Particles weights of Pre-track PF
 % Pre_weight=zeros(Np,Total_time);                % Normalized Particles weights
 % Pre_w_likehood_all=zeros(Np,Total_time);        % likehood part of the pre-PF weights
@@ -65,7 +65,7 @@ for t = 1:Total_time
         
         %--------new_pretrack=zeros(4,Num_n_target,Np);
         Pre_T_life_index=ones(1,Np);
-        Pre_T_life_quality=ones(1,Np);
+%         Pre_T_life_quality=ones(1,Np);
         for i=1:Np
             Pre_T_particle(1:6,t,i)=[position_x_p(i);velocity_x_p(i);velocity_p_kk1(i);position_y_p(i);velocity_y_p(i);velocity_p_kk1(i)];
             %Pre_T_particle(1:6,t,i)=[position_x_p(i);velocity_x_p(i);velocity_p_kk1(i);position_y_p(i);velocity_y_p(i);velocity_p_kk1(i)];
@@ -119,7 +119,7 @@ for t = 1:Total_time
             Z_y_index=ceil(Pre_T_particle(4,t,j));
             if Z_x_index<=numX && Z_x_index>0 && Z_y_index<=numY && Z_y_index>0
                 Pre_track_Z(j)=Detection_frame(Z_y_index,Z_x_index); 
-                Pre_T_life_quality(j)=Pre_T_life_quality(j)+Detection_frame(Z_y_index,Z_x_index);
+%                 Pre_T_life_quality(j)=Pre_T_life_quality(j)+Detection_frame(Z_y_index,Z_x_index);
                 Pre_T_particle(7,t,j)=Detection_frame(Z_y_index,Z_x_index); %该粒子（样本）处的观测值
              %% Gaussian likelihood ratio
                 Partition_likehood(j)=exp(0.5*(2*Detection_frame(Z_y_index,Z_x_index)*A-A^2));
@@ -168,7 +168,7 @@ for t = 1:Total_time
         %% === sample index funciton
                                 %%%%%%粒子云%%%%%%
 %                                 for t=1:5:25
-%                                 %%%%采样前
+%                                 %%%%重采样前
 %                                 figure(8)
 %                                 colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
 %         %                     plot(squeeze(Pre_T_particle(1,t-1,i,:)),squeeze(Pre_T_particle(4,t-1,i,:)),colorParticle{1,i})
@@ -179,8 +179,8 @@ for t = 1:Total_time
 %                                 end
         [index_sample]=Sample_index(Partition_likehood);
         Pre_T_particle(:,t,:)=Pre_T_particle(:,t,index_sample);
-        Pre_T_life_quality=Pre_T_life_quality(index_sample);
-                                %%%%%%采样后
+%         Pre_T_life_quality=Pre_T_life_quality(index_sample);
+                                %%%%%%重采样后
         figure (t+20)
         colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
         grid on

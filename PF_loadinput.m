@@ -110,7 +110,7 @@ for Np_i = 1:length(NpN)
             display(['Np=',num2str(Np),'; Monte=',num2str(monte_i)])
             %%
             xy_data = zeros(size(Frame_data));
-            A=sqrt(10.^(snr/10)*Sigma_noise);
+            A=sqrt(10.^(snr/10)*Sigma_noise); %sqrt£¨ÐÅºÅ¹¦ÂÊ£©
             for t = 1:Total_time
                 B=A*exp(sqrt(-1)*2*pi*rand);
                 %     Frame_data(:,:,t) = Noise_data(:,numX*(t-1)+1:numX*t);
