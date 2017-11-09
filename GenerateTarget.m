@@ -11,7 +11,7 @@ x_c = zeros(3*Target_number,Total_time_data); %why 3?
 %    T_step^2*q1/2 T_step*q1      0           0 ;
 %    0             0           T_step^3*q1/3  T_step^2*q1/2;
 %    0             0           T_step^2*q1/2  q1*T_step];        % ProcessNoise covariance matrix
-Sigma_noise=1; %sigma_noise?
+Sigma_noise=0.01; %sigma_noise?
 i_p = [8,6]';
 %i_p = [10,6;6,Num_Cell_y/2;Num_Cell_x/2,Num_Cell_y-6;Num_Cell_x-6,10]'; %position i_p(4*2)?
 v1=(1+0.5*rand(1,4))*velocity_init;  %1*4Columns

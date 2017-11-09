@@ -3,7 +3,7 @@ clc
 close all
 format long;
 L = 0; %？
-Monte = 50;
+Monte = 2;
 axisX = 30; %50%x轴最大值
 axisY = 30;%50
 Total_time = 20;%40
@@ -14,8 +14,8 @@ xpart = 0:Re_x:axisX;
 numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %?
-SNR = [6]; %
-NpN =100;%2.^[1:10]--仿真粒子数变化
+SNR = [9]; %
+NpN = 1000;%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
 q1 = 0.0015; %"空间过程噪声加速度的功率谱密度 ?
@@ -38,18 +38,18 @@ y_dis = ceil(x(3,:)/Re_y)*Re_y;
 
 
 %% adding fake target 
-[fake_initx,fake_x,fake_x_c] = GenerateFakeTarget(Target_number,velocity_init,axisX,axisY,Total_time,F,Q);
-
-figure(1)
-plot(x(1,:),x(3,:),'bp-','Linewidth',2);
-hold on; grid on;
-plot(fake_x(1,[5:15]),fake_x(3,5:15),'m-o','Linewidth',2);
-axis equal
-axis ([0 30 0 30])
-hold off
-
-fake_x_dis = ceil(fake_x(1,[5:15])/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
-fake_y_dis = ceil(fake_x(3,[5:15])/Re_y)*Re_y;
+% [fake_initx,fake_x,fake_x_c] = GenerateFakeTarget(Target_number,velocity_init,axisX,axisY,Total_time,F,Q);
+% 
+% figure(1)
+% plot(x(1,:),x(3,:),'bp-','Linewidth',2);
+% hold on; grid on;
+% plot(fake_x(1,[5:15]),fake_x(3,5:15),'m-o','Linewidth',2);
+% axis equal
+% axis ([0 30 0 30])
+% hold off
+% 
+% fake_x_dis = ceil(fake_x(1,[5:15])/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
+% fake_y_dis = ceil(fake_x(3,[5:15])/Re_y)*Re_y;
 %%
 
 
@@ -116,9 +116,9 @@ for Np_i = 1:length(NpN)
                 Frame_data(y_dis(t),x_dis(t),t) = Frame_data(y_dis(t),x_dis(t),t)+ B;
                 
                 %% fake data adding to the plane
-                if t>=5 && t <=15
-                    Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t) = Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t)+ B;
-                end
+%                 if t>=5 && t <=15
+%                     Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t) = Frame_data(fake_y_dis(t-4),fake_x_dis(t-4),t)+ B;
+%                 end
                 %%
                 
                 xy_data(:,:,t)=abs(Frame_data(:,:,t));
@@ -155,7 +155,7 @@ for Np_i = 1:length(NpN)
                 %     pause
             end
             
-            [E_target_state]=standard_SIR(Np,initx,Re_x,Re_y,numX,numY,Total_time,xy_data,Sigma_noise,A);
+            [E_target_state]=standard_SIR(Np,initx,Re_x,Re_y,numX,numY,Total_time,xy_data,Sigma_noise,A,F,Q);
             E_target(:,:,monte_i,snr_i,Np_i) = E_target_state;
         end
 Target_p_error(:,:,snr_i,Np_i) = (squeeze(E_target(1,:,:,snr_i,Np_i))-repmat(x(1,:),Monte,1)').^2 + (squeeze(E_target(4,:,:,snr_i,Np_i))-repmat(x(3,:),Monte,1)').^2; %T*Np*length(SNR)
@@ -165,7 +165,7 @@ xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i);
 xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)
 end
 
-figure(2)
+figure(60)
 plot(xy_P(1,:),xy_P(4,:),'bp-')
 axis([0,axisX,0,axisY])
 hold on;grid on;
@@ -175,14 +175,14 @@ xlabel('x方向距离')
 ylabel('y方向距离')
 legend('估计轨迹','真实轨迹')
 % 
-% figure(3)
-% plot(error_P(:,1,Np_i),'^-');
-% title('各帧均方误差')
-% % axis([0,Total_time,0,1])
-% xlabel('时间/帧')
-% ylabel('均方误差')
-% grid on
-% 
+figure(61)
+plot(error_P(:,1,Np_i),'^-');
+title('各帧均方误差')
+% axis([0,Total_time,0,1])
+xlabel('时间/帧')
+ylabel('均方误差')
+grid on
+
 % figure(4)
 % plot(xy_P3(1,:),xy_P3(4,:),'bp-')
 % axis([0,axisX,0,axisY])

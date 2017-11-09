@@ -53,13 +53,13 @@ for t = 1:Total_time
 %         position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
 %         position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
         %% --------初始粒子均匀分布
-        position_x_p = random('unif',1,30,Np,1);
-        position_y_p = random('unif',1,30,Np,1);       
+        position_x_p = random('unif',1,29,Np,1);
+        position_y_p = random('unif',1,29,Np,1);       
         %% --------generate velocity based on the detections
         velocity_x_p=repmat(index_vx,Np,1);
         velocity_y_p=repmat(index_vy,Np,1);
-%        velocity_x_p=ones(Np,1);
-%        velocity_y_p=ones(Np,1);
+%        velocity_x_p=random('unif',0.5,1.5,Np,1);;
+%        velocity_y_p=random('unif',0.5,1.5,Np,1);;
         %--------generate velocity variance
         velocity_p_kk1=new_velocity_Variance.*ones(Np,1);
         
@@ -73,14 +73,14 @@ for t = 1:Total_time
         Pre_T_particle(7,t,:)=1;
         %particle_likehood_after_bias=ones(1,Np);
         
-       %% 画初始粒子t=1
-        figure(1)
-        colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
-        grid on
-        plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{1,1})
-        title('采样前后粒子云')
-        axis([0,30,0,30])
-        hold on
+%        %% 画初始粒子t=1
+%         figure(1)
+%         colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
+%         grid on
+%         plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),colorParticle{1,1})
+%         title('采样前后粒子云')
+%         axis([0,30,0,30])
+%         hold on
     else
         %% --------------- evolution of the pre-tracks ----------------
         %% -----------independent partition particle filter------------
