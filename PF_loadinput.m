@@ -15,7 +15,7 @@ numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %
 SNR = [6]; %
-NpN = 1024;%2.^[1:10]--仿真粒子数变化
+NpN = 200;%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
 q1 = 0.0015; %"空间过程噪声加速度的功率谱密度 ?
@@ -167,7 +167,8 @@ for Np_i = 1:length(NpN)
             E_target(:,:,monte_i,snr_i,Np_i) = E_target_state;
         end
 Target_p_error(:,:,snr_i,Np_i) = (squeeze(E_target(1,:,:,snr_i,Np_i))-repmat(x(1,:),Monte,1)').^2 + (squeeze(E_target(4,:,:,snr_i,Np_i))-repmat(x(3,:),Monte,1)').^2; %T*Np*length(SNR)
-error_P(:,snr_i,Np_i) = squeeze(sqrt(mean(Target_p_error(:,:,snr_i,Np_i),2))); %%T*length(SNR)
+% error_P(:,snr_i,Np_i) = squeeze(sqrt(mean(Target_p_error(:,:,snr_i,Np_i),2))); %%T*length(SNR)
+error_P(:,snr_i,Np_i) = sqrt(mean(Target_p_error(:,:,snr_i,Np_i),2)); %%T*length(SNR)
     end
 xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i);
 xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)

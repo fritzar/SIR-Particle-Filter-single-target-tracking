@@ -202,7 +202,7 @@ legend('估计轨迹','真实轨迹')
 % grid on
 % 
 % figure(10)
-% plot(SNR,mean(error_P,1),'ko-')
+% plot(SNR,mean( ,1),'ko-')
 % grid on
 % title('RMSE随信噪比曲线')
 % xlabel('SNR/dB')
