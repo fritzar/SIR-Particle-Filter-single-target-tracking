@@ -53,8 +53,8 @@ for t = 1:Total_time
 %         position_x_p=repmat(index_x,Np,1)+delta_p*randn(Np,1);
 %         position_y_p=repmat(index_y,Np,1)+delta_p*randn(Np,1);
         %% --------初始粒子均匀分布
-        position_x_p = random('unif',1,29,Np,1);
-        position_y_p = random('unif',1,29,Np,1);       
+        position_x_p = random('unif',1,10,Np,1);
+        position_y_p = random('unif',1,10,Np,1);       
         %% --------generate velocity based on the detections
         velocity_x_p=repmat(index_vx,Np,1);
         velocity_y_p=repmat(index_vy,Np,1);
@@ -145,12 +145,12 @@ for t = 1:Total_time
                 Partition_likehood(j)=0;
             end
         end
-        figure (t)
-        colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
-        grid on
-        plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),'k.')
-        axis([0,30,0,30])
-        hold on
+%         figure (t)
+%         colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
+%         grid on
+%         plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),'k.')
+%         axis([0,30,0,30])
+%         hold on
 %         keyboard 
         
         
@@ -181,12 +181,12 @@ for t = 1:Total_time
         Pre_T_particle(:,t,:)=Pre_T_particle(:,t,index_sample);
 %         Pre_T_life_quality=Pre_T_life_quality(index_sample);
                                 %%%%%%重采样后
-        figure (t+20)
-        colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
-        grid on
-        plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),'r.')
-        axis([0,30,0,30])
-        hold on
+%         figure (t+20)
+%         colorParticle={'b.','y.','g.','k.';'g^','k^','b^','y^';'bo','ro','mo','go'};
+%         grid on
+%         plot(squeeze(Pre_T_particle(1,t,:)),squeeze(Pre_T_particle(4,t,:)),'r.')
+%         axis([0,30,0,30])
+%         hold on
                                 
 %                                 for t=1:5:25
 %         %                     plot(squeeze(Pre_T_particle(1,t-1,i,:)),squeeze(Pre_T_particle(4,t-1,i,:)),colorParticle{2,i})
