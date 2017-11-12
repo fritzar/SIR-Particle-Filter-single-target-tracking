@@ -198,14 +198,14 @@ legend('估计点迹','真实点迹')
 %% 多Np_i/SNR_i绘RMSE
 colorParticle={'b.','y.','g.','k.';'g^-','k^-','b^-','y^-';'bo','ro','mo','go'};
 figure(60)
-% for Np_i = 1: length(NpN)
-% plot(error_P(:,1,Np_i),colorParticle{2,Np_i});
-% hold on
-% end
-for SNR_i = 1: length(SNR)
-plot(error_P(:,SNR_i,1),colorParticle{2,SNR_i});
+for Np_i = 1: length(NpN)
+plot(error_P(:,1,Np_i),colorParticle{2,Np_i});
 hold on
 end
+% for SNR_i = 1: length(SNR)
+% plot(error_P(:,SNR_i,1),colorParticle{2,SNR_i});
+% hold on
+% end
 hold off
 title('各帧均方误差')
 % axis([0,Total_time,0,1])
