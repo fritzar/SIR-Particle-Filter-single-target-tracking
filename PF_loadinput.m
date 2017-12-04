@@ -14,8 +14,8 @@ xpart = 0:Re_x:axisX;
 numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %
-SNR = [6]; %
-NpN = 2.^[6:2:12]; %粒子数变化
+SNR = [9]; %
+NpN = 64; %粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
 q1 = 0.0015; %"空间过程噪声加速度的功率谱密度 ?
@@ -57,7 +57,7 @@ y_dis = ceil(x(3,:)/Re_y)*Re_y;
 % 
 % fake_x_dis = ceil(fake_x(1,[5:15])/Re_x)*Re_x; %能分辨的目标位置， ceil朝正无穷方向取整
 % fake_y_dis = ceil(fake_x(3,[5:15])/Re_y)*Re_y;
-%%
+%% 
 
 
 E_target = zeros(7,Total_time,Monte,length(SNR),length(NpN));
@@ -87,7 +87,7 @@ for Np_i = 1:length(NpN)
 %             axis tight
 %             hold off
             
-        %% 瑞利噪声
+            %% 瑞利噪声
 %             Noise_data = raylrnd(Sigma_noise,numY,numX*Total_time);
 %             for ti=1:Total_time
 %                 for xi=1:numX

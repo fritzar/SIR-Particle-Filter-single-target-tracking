@@ -5,13 +5,13 @@
 #### 函数格式
 
 ```
-plot(x,y) 
+plot(x,y)
 ```
 plot函数以向量x、y为轴，绘制曲线。其中x和y为长度相同的向量。
 
 另有x,y为矩阵的用法，见help。
 
-含多个输入参数的plot函数调用格式为： 
+含多个输入参数的plot函数调用格式为：
 ```
 plot(x1,y1,x2,y2,…,xn,yn)
 ```
@@ -37,7 +37,7 @@ plot(x1,y1,’cms’,....)
 ```
 c为颜色，m为标记，s为线型。
 ```
-plot(x,y,'-.om') 
+plot(x,y,'-.om')
 %'-.'line,'o'circle marker,'m'magenta color 洋红色
 ```
 另可设置Linewidth,MarkerEdgeColor,MarkerFaceColor,MarkerSize
@@ -114,12 +114,12 @@ mesh(x,y,z,'LineSpec')
 示例
 
 ```
-x=linspace(-2, 2, 25); % 在x轴上取25点 
-y=linspace(-2, 2, 25); % 在y轴上取25点 
-[xx,yy]=meshgrid(x,y); % 形成网格，xx和yy都是25x25的矩阵 
-zz=xx.*exp(-xx.^2-yy.^2); 
-%计算函数值，zz也是25x25的矩阵 
-mesh(xx, yy, zz); %画出立体网状图 
+x=linspace(-2, 2, 25); % 在x轴上取25点
+y=linspace(-2, 2, 25); % 在y轴上取25点
+[xx,yy]=meshgrid(x,y); % 形成网格，xx和yy都是25x25的矩阵
+zz=xx.*exp(-xx.^2-yy.^2);
+%计算函数值，zz也是25x25的矩阵
+mesh(xx, yy, zz); %画出立体网状图
 ```
 ### 三维曲面图 surf
 各线条之间的补面用颜色填充。
@@ -163,9 +163,20 @@ movie(m,10);%以每秒10幅的速度播放画面
 
 
 ## 其他
+### cell模式
+在一个长长的脚本m文件中，可能需要对其中的一段反复修改，查看执行效果，这时，cell模式就非常有用了。
+
+cell模式相当于将其中的代码拷贝到命令窗口中运行。两个%后接一个空格` %% `开始一个cell。
+
+将输入光标放到一个cell中时，背景将变为浅黄色，` Ctrl+Enter`执行cell中的代码。
+
+执行cell中代码时不需要保存m文件，该m文件可以不在路径列表中。
+
+cell模式中，断点不起作用，当然，调用的子程序中的断点还是正常的。
+
 ### 随机数生成函数
 ` rand(m,n)`生成均匀分布的 m * n 矩阵
-注： ` rand(n,n)=rand(n,n)` 
+注： ` rand(n,n)=rand(n,n)`
 
 ` randn(m,n)` 满足正态分布的m * n 矩阵
 
@@ -257,4 +268,3 @@ t=cell2mat(sc);
 1. Matlab help browser.
 2. [Matlab绘图命令](http://www.cnblogs.com/hxsyl/archive/2012/10/10/2718380.html)
 3. [Matlab中save与load函数的使用](http://www.cnblogs.com/rong86/p/3559861.html)
-
