@@ -183,35 +183,42 @@ title('跟踪结果')
 xlabel('x方向距离')
 ylabel('y方向距离')
 legend('估计点迹','真实点迹')
+set(gcf,'Position',[100 100 260 220]);
+set(gca,'Position',[.13 .17 .80 .74]);
+figure_FontSize=8;
+set(get(gca,'XLabel'),'FontSize',figure_FontSize,'Vertical','top');
+set(get(gca,'YLabel'),'FontSize',figure_FontSize,'Vertical','middle');
+set(findobj('FontSize',10),'FontSize',figure_FontSize);
+set(findobj(get(gca,'Children'),'LineWidth',0.5),'LineWidth',2);
 %% 单目标多Np_i绘轨迹
-figure(51)
-plot(xy_P(1,:),xy_P(4,:),'gp-')
-plot(xy_P(1,:),xy_P(4,:),'kp-')
-plot(xy_P(1,:),xy_P(4,:),'bp-')
-axis([0,axisX,0,axisY])
-hold on;grid on;
-plot(x(1,:),x(3,:),'ko-')
-title('跟踪结果')
-xlabel('x方向距离')
-ylabel('y方向距离')
-legend('估计点迹','真实点迹')
+% figure(51)
+% plot(xy_P(1,:),xy_P(4,:),'gp-')
+% plot(xy_P(1,:),xy_P(4,:),'kp-')
+% plot(xy_P(1,:),xy_P(4,:),'bp-')
+% axis([0,axisX,0,axisY])
+% hold on;grid on;
+% plot(x(1,:),x(3,:),'ko-')
+% title('跟踪结果')
+% xlabel('x方向距离')
+% ylabel('y方向距离')
+% legend('估计点迹','真实点迹')
 %% 多Np_i/SNR_i绘RMSE
-colorParticle={'b.','y.','g.','k.';'g^-','k^-','b^-','y^-';'bo','ro','mo','go'};
-figure(60)
-for Np_i = 1: length(NpN)
-plot(error_P(:,1,Np_i),colorParticle{2,Np_i});
-hold on
-end
-% for SNR_i = 1: length(SNR)
-% plot(error_P(:,SNR_i,1),colorParticle{2,SNR_i});
+% colorParticle={'b.','y.','g.','k.';'g^-','k^-','b^-','y^-';'bo','ro','mo','go'};
+% figure(60)
+% for Np_i = 1: length(NpN)
+% plot(error_P(:,1,Np_i),colorParticle{2,Np_i});
 % hold on
 % end
-hold off
-title('各帧均方误差')
-% axis([0,Total_time,0,1])
-xlabel('时间/帧')
-ylabel('均方误差')
-grid on
+% % for SNR_i = 1: length(SNR)
+% % plot(error_P(:,SNR_i,1),colorParticle{2,SNR_i});
+% % hold on
+% % end
+% hold off
+% title('各帧均方误差')
+% % axis([0,Total_time,0,1])
+% xlabel('时间/帧')
+% ylabel('均方误差')
+% grid on
  
 % figure(4)
 % plot(xy_P3(1,:),xy_P3(4,:),'bp-')
@@ -223,6 +230,7 @@ grid on
 % ylabel('y方向距离')
 % legend('估计轨迹','真实轨迹')
 % 
+%% 
 figure(5)
 plot(error_P(:,1,Np_i),'^-');
 title('各帧均方误差')
@@ -230,6 +238,13 @@ title('各帧均方误差')
 xlabel('时间/帧')
 ylabel('均方误差')
 grid on
+set(gcf,'Position',[100 100 260 220]);
+set(gca,'Position',[.13 .17 .80 .74]);
+figure_FontSize=8;
+set(get(gca,'XLabel'),'FontSize',figure_FontSize,'Vertical','top');
+set(get(gca,'YLabel'),'FontSize',figure_FontSize,'Vertical','middle');
+set(findobj('FontSize',10),'FontSize',figure_FontSize);
+set(findobj(get(gca,'Children'),'LineWidth',0.5),'LineWidth',2);
 % 
 % figure(10)
 % plot(SNR,mean(error_P,1),'ko-')
