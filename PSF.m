@@ -4,9 +4,9 @@ close all
 format long;
 L = 0; %？
 Monte = 50;
-axisX = 30; %50%x轴最大值
-axisY = 30;%50
-Total_time = 20;%40
+axisX = 30; %x轴最大值
+axisY = 30;
+Total_time = 20;
 Re_x = 1; %Resolution of x-axis
 Re_y = 1;
 ypart = 0:Re_y:axisY; %步长为分辨率
@@ -213,9 +213,7 @@ legend('估计点迹','真实点迹')
 % grid on
 %% 
 figure(5)
-plot(error_P(:,1,Np_i),'^-'); %某一个snr条件下的
-
-
+plot(error_P(:,1,Np_i),'^-'); %某一个snr条件下的rmse
 title('各帧均方误差')
 % axis([0,Total_time,0,1])
 xlabel('时间/帧')
