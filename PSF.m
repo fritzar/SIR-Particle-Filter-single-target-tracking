@@ -174,6 +174,7 @@ title('跟踪结果')
 xlabel('x方向距离')
 ylabel('y方向距离')
 legend('估计点迹','真实点迹')
+%控制参数
 set(gcf,'Position',[100 100 260 220]);
 set(gca,'Position',[.13 .17 .80 .74]);
 figure_FontSize=8;
@@ -182,17 +183,17 @@ set(get(gca,'YLabel'),'FontSize',figure_FontSize,'Vertical','middle');
 set(findobj('FontSize',10),'FontSize',figure_FontSize);
 set(findobj(get(gca,'Children'),'LineWidth',0.5),'LineWidth',2);
 %% 单目标多Np_i绘轨迹
-% figure(51)
-% plot(xy_P(1,:),xy_P(4,:),'gp-')
-% plot(xy_P(1,:),xy_P(4,:),'kp-')
-% plot(xy_P(1,:),xy_P(4,:),'bp-')
-% axis([0,axisX,0,axisY])
-% hold on;grid on;
-% plot(x(1,:),x(3,:),'ko-')
-% title('跟踪结果')
-% xlabel('x方向距离')
-% ylabel('y方向距离')
-% legend('估计点迹','真实点迹')
+figure(51)
+plot(xy_P(1,:),xy_P(4,:),'gp-')
+plot(xy_P(1,:),xy_P(4,:),'kp-')
+plot(xy_P(1,:),xy_P(4,:),'bp-')
+axis([0,axisX,0,axisY])
+hold on;grid on;
+plot(x(1,:),x(3,:),'ko-')
+title('跟踪结果')
+xlabel('x方向距离')
+ylabel('y方向距离')
+legend('估计点迹','真实点迹')
 %% 多Np_i/SNR_i绘RMSE
 % colorParticle={'b.','y.','g.','k.';'g^-','k^-','b^-','y^-';'bo','ro','mo','go'};
 % figure(60)
@@ -213,6 +214,8 @@ set(findobj(get(gca,'Children'),'LineWidth',0.5),'LineWidth',2);
 %% 
 figure(5)
 plot(error_P(:,1,Np_i),'^-'); %某一个snr条件下的
+
+
 title('各帧均方误差')
 % axis([0,Total_time,0,1])
 xlabel('时间/帧')
