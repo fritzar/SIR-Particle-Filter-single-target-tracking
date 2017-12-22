@@ -3,7 +3,7 @@ clc
 close all
 format long;
 L = 0; %？
-Monte = 2;
+Monte = 50;
 axisX = 30; %50%x轴最大值
 axisY = 30;%50
 Total_time = 20;%40
@@ -14,8 +14,8 @@ xpart = 0:Re_x:axisX;
 numY = length(ypart); %取长度
 numX = length(xpart);
 Sigma_noise = 1; %?
-SNR = [9]; %
-NpN = 1000;%2.^[1:10]--仿真粒子数变化
+SNR = [6]; %
+NpN = [64,256,1024];%2.^[1:10]--仿真粒子数变化
 %Np = 1000;
 T_step = 1; % The size of the time cell:Time_step
 q1 = 0.0015; %"空间过程噪声加速度的功率谱密度 ?
@@ -159,13 +159,13 @@ for Np_i = 1:length(NpN)
             E_target(:,:,monte_i,snr_i,Np_i) = E_target_state;
         end
 Target_p_error(:,:,snr_i,Np_i) = (squeeze(E_target(1,:,:,snr_i,Np_i))-repmat(x(1,:),Monte,1)').^2 + (squeeze(E_target(4,:,:,snr_i,Np_i))-repmat(x(3,:),Monte,1)').^2; %T*Np*length(SNR)
-error_P(:,snr_i,Np_i) = squeeze(sqrt(mean(Target_p_error(:,:,snr_i,Np_i),2))); %%T*length(SNR)
+error_P(:,snr_i,Np_i) = squeeze(sqrt(mean(Target_p_error(:,:,snr_i,Np_i),2))); %%T*length(SNR)*length（Np）
     end
-xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i);
-xy_P3 = E_target(:,:,ceil(Monte*rand),snr_i,Np_i); %最后一次（snr_i和Np_i停在最后一个值）ceil(Monte*rand)
+xy_P = E_target(:,:,ceil(Monte*rand),1,Np_i); %随机选取一次蒙特卡洛仿真
 end
 
-figure(60)
+%% 单目标一次monte轨迹（小图）%cell模式 ctrl+enter执行，相当于命令窗口
+figure(50)
 plot(xy_P(1,:),xy_P(4,:),'bp-')
 axis([0,axisX,0,axisY])
 hold on;grid on;
@@ -173,36 +173,61 @@ plot(x(1,:),x(3,:),'ko-')
 title('跟踪结果')
 xlabel('x方向距离')
 ylabel('y方向距离')
-legend('估计轨迹','真实轨迹')
-% 
-figure(61)
-plot(error_P(:,1,Np_i),'^-');
-title('各帧均方误差')
-% axis([0,Total_time,0,1])
-xlabel('时间/帧')
-ylabel('均方误差')
-grid on
-
-% figure(4)
-% plot(xy_P3(1,:),xy_P3(4,:),'bp-')
+legend('估计点迹','真实点迹')
+set(gcf,'Position',[100 100 260 220]);
+set(gca,'Position',[.13 .17 .80 .74]);
+figure_FontSize=8;
+set(get(gca,'XLabel'),'FontSize',figure_FontSize,'Vertical','top');
+set(get(gca,'YLabel'),'FontSize',figure_FontSize,'Vertical','middle');
+set(findobj('FontSize',10),'FontSize',figure_FontSize);
+set(findobj(get(gca,'Children'),'LineWidth',0.5),'LineWidth',2);
+%% 单目标多Np_i绘轨迹
+% figure(51)
+% plot(xy_P(1,:),xy_P(4,:),'gp-')
+% plot(xy_P(1,:),xy_P(4,:),'kp-')
+% plot(xy_P(1,:),xy_P(4,:),'bp-')
 % axis([0,axisX,0,axisY])
 % hold on;grid on;
 % plot(x(1,:),x(3,:),'ko-')
 % title('跟踪结果')
 % xlabel('x方向距离')
 % ylabel('y方向距离')
-% legend('估计轨迹','真实轨迹')
-% 
-% figure(5)
-% plot(error_P(:,3,Np_i),'^-');
+% legend('估计点迹','真实点迹')
+%% 多Np_i/SNR_i绘RMSE
+% colorParticle={'b.','y.','g.','k.';'g^-','k^-','b^-','y^-';'bo','ro','mo','go'};
+% figure(60)
+% for Np_i = 1: length(NpN)
+% plot(error_P(:,1,Np_i),colorParticle{2,Np_i});
+% hold on
+% end
+% % for SNR_i = 1: length(SNR)
+% % plot(error_P(:,SNR_i,1),colorParticle{2,SNR_i});
+% % hold on
+% % end
+% hold off
 % title('各帧均方误差')
 % % axis([0,Total_time,0,1])
 % xlabel('时间/帧')
 % ylabel('均方误差')
 % grid on
+%% 
+figure(5)
+plot(error_P(:,1,Np_i),'^-'); %某一个snr条件下的
+title('各帧均方误差')
+% axis([0,Total_time,0,1])
+xlabel('时间/帧')
+ylabel('均方误差')
+grid on
+set(gcf,'Position',[100 100 260 220]);
+set(gca,'Position',[.13 .17 .80 .74]);
+figure_FontSize=8;
+set(get(gca,'XLabel'),'FontSize',figure_FontSize,'Vertical','top');
+set(get(gca,'YLabel'),'FontSize',figure_FontSize,'Vertical','middle');
+set(findobj('FontSize',10),'FontSize',figure_FontSize);
+set(findobj(get(gca,'Children'),'LineWidth',0.5),'LineWidth',2);
 % 
 % figure(10)
-% plot(SNR,mean( ,1),'ko-')
+% plot(SNR,mean(error_P,1),'ko-')
 % grid on
 % title('RMSE随信噪比曲线')
 % xlabel('SNR/dB')
