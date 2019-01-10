@@ -59,7 +59,6 @@ y_dis = ceil(x(3,:)/Re_y)*Re_y;
 % fake_y_dis = ceil(fake_x(3,[5:15])/Re_y)*Re_y;
 %% 
 
-
 E_target = zeros(7,Total_time,Monte,length(SNR),length(NpN));
 Target_p_error = zeros(Total_time,Monte,length(SNR),length(NpN));
 error_P = zeros(Total_time,length(SNR),length(NpN));
